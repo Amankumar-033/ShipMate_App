@@ -22,7 +22,7 @@ const GlassCard = styled(motion.div)`
   border: 1.5px solid #e0e7ff44;
   padding: 2.5rem 2.5rem 2.2rem 2.5rem;
   max-width: 440px;
-  margin: 0 auto;
+  margin: 0 auto; /* CRITICAL CHANGE: Changed from 4rem auto to 0 auto */
   color: #22223b;
   animation: ${fadeIn} 0.8s;
   position: relative;
@@ -67,6 +67,7 @@ const FloatingLabel = styled.label<{active: boolean}>`
 const InputGroup = styled.div`
   position: relative;
   margin-bottom: 1.8rem;
+  z-index: 1; /* Ensures proper stacking context */
 `;
 
 const Input = styled.input`
@@ -83,6 +84,7 @@ const Input = styled.input`
     outline: none;
     background: #f1f5f988;
   }
+  padding-top: 1.5rem; /* Ensures text doesn't overlap floating label */
 `;
 
 const Select = styled.select`
@@ -164,6 +166,7 @@ export default function ProEstimateForm({ onEstimate }) {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any>(null);
+  const [isFocused, setIsFocused] = useState(false);
 
   const { addEstimate } = useAppContext();
 
@@ -241,11 +244,15 @@ export default function ProEstimateForm({ onEstimate }) {
   };
 
   return (
+    // CRITICAL CHANGES HERE: Removed minHeight and background. Added flex properties and padding.
     <div style={{
-      minHeight: "100vh",
-      background: "linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 60%, #6366f1 100%)",
-      padding: "0",
-      fontFamily: "Poppins, sans-serif"
+      padding: "2rem 1rem", /* This padding creates space from the top of the ContentArea */
+      fontFamily: "Poppins, sans-serif",
+      display: "flex",       /* Use flexbox to center GlassCard */
+      justifyContent: "center", /* Centers GlassCard horizontally */
+      alignItems: "flex-start", /* Aligns GlassCard to the top, allowing padding to push it down */
+      flexGrow: 1,           /* Allows this div to fill available vertical space from ContentArea */
+      width: "100%",         /* Ensure it takes full width */
     }}>
       <GlassCard
         initial={{ opacity: 0, scale: 0.94 }}
@@ -301,10 +308,14 @@ export default function ProEstimateForm({ onEstimate }) {
                       type={step === 2 ? "number" : "text"}
                       value={fields[step]}
                       onChange={handleInput}
-                      onBlur={() => setTouched((old) => { const arr = [...old]; arr[step] = true; return arr; })}
+                      onFocus={() => setIsFocused(true)}
+                      onBlur={(e) => {
+                          setIsFocused(false);
+                          setTouched((old) => { const arr = [...old]; arr[step] = true; return arr; });
+                      }}
                       aria-label={steps[step].label}
                     />
-                    <FloatingLabel active={fields[step] !== "" || document.activeElement === document.activeElement}>
+                    <FloatingLabel active={fields[step] !== "" || isFocused}>
                       {steps[step].placeholder}
                     </FloatingLabel>
                   </>
@@ -347,3 +358,5 @@ export default function ProEstimateForm({ onEstimate }) {
     </div>
   );
 }
+
+
