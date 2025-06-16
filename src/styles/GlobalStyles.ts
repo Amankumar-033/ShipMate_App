@@ -9,22 +9,21 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
   }
 
-  /* IMPORTANT: Configure html, body, and the #root element for proper full-page scrolling */
+  /* Base font size for rem units, easier scaling */
+  html {
+    font-size: 16px; /* Base for rem units */
+  }
+
+  /* CRITICAL: Ensure html, body, and the #root element allow scrolling */
   html, body, #root { 
-    height: 100%; /* Ensures they take the full height of the viewport */
+    height: 100%; 
     width: 100%;
-    /* CRITICAL: Allow vertical scrolling for the entire page if content overflows */
-    overflow-y: auto;   
-    /* Prevent horizontal scrolling unless explicitly needed by content */
+    overflow-y: scroll !important;   
     overflow-x: hidden; 
     
-    /* Remove min-height and background from here, as App.tsx's wrappers handle these */
-    /* min-height: 100vh; -- REMOVED */
-    /* background: #f1f5f9; -- REMOVED */
-
-    /* Default font and text color, can be overridden by specific components */
     color: #1e293b;
     font-family: 'Poppins', Arial, sans-serif;
+    line-height: 1.5; /* Good default for readability */
   }
 
   h1, h2, h3 {
@@ -33,6 +32,7 @@ const GlobalStyles = createGlobalStyle`
     font-weight: 700;
     letter-spacing: 0.02em;
     margin: 0;
+    line-height: 1.2; /* Tighter line-height for headings */
   }
   a {
     color: #2563eb;
