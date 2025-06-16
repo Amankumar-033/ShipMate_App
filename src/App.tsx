@@ -5,13 +5,14 @@ import HistoryPage from './components/HistoryList';
 import styled from 'styled-components';
 
 const Navbar = styled.nav`
-  background: #1e293b;
+  background: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
   color: white;
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12);
+  border-bottom: 1.5px solid #2563eb;
 `;
 
 const NavLink = styled(Link)`
@@ -25,6 +26,12 @@ const NavLink = styled(Link)`
 `;
 
 const App: React.FC = () => {
+  // Handler for the estimate result
+  const handleEstimate = (estimate: any) => {
+    // Do something with the estimate, e.g., update context, show result, etc.
+    console.log("Estimate completed:", estimate);
+  };
+
   return (
     <Router>
       <Navbar>
@@ -35,7 +42,7 @@ const App: React.FC = () => {
         </div>
       </Navbar>
       <Routes>
-        <Route path="/" element={<EstimateForm />} />
+        <Route path="/" element={<EstimateForm onEstimate={handleEstimate} />} />
         <Route path="/history" element={<HistoryPage />} />
       </Routes>
     </Router>
