@@ -57,51 +57,72 @@ const MainAppWrapper = styled.div`
 `;
 
 const ContentArea = styled.div`
-  flex-grow: 1; 
-  display: flex; 
-  flex-direction: column; 
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* This keeps the form centered */
   background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 60%, #6366f1 100%);
-  overflow-y: auto; 
-  padding-bottom: 75vh; 
-  /* Add responsive padding for overall content area if needed,
-     though ProEstimateForm's padding will primarily control its position */
-  padding-top: 2rem; /* Ensure there's a base padding above the form */
+  padding: 2rem 1rem;
+  overflow-y: auto;
 
   @media (max-width: 768px) {
-    padding-top: 1.5rem;
-    padding-bottom: 50vh; /* Adjust padding for tablets */
+    padding: 1.5rem 1rem;
   }
 
   @media (max-width: 480px) {
-    padding-top: 1rem;
-    padding-bottom: 30vh; /* Less padding for mobile */
+    padding: 1rem 0.5rem;
   }
 `;
 
+
+
+const Footer = styled.footer`
+  background-color: #1e293b;
+  color: #f1f5f9;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    padding: 0.8rem;
+  }
+`;
+
+
+
 const App: React.FC = () => {
   const handleEstimate = (estimate: any) => {
-    console.log("Estimate completed:", estimate);
+    console.log("Estimate Processing:", estimate);
   };
 
   return (
     <Router>
-      <GlobalStyles /> 
-      <MainAppWrapper>
-        <Navbar>
-          <h2>🚚 ShipEase</h2>
-          <div>
-            <NavLink to="/">Estimate</NavLink>
-            <NavLink to="/history">History</NavLink>
-          </div>
-        </Navbar>
-        <ContentArea>
-          <Routes>
-            <Route path="/" element={<ProEstimateForm onEstimate={handleEstimate} />} />
-            <Route path="/history" element={<HistoryPage />} />
-          </Routes>
-        </ContentArea>
-      </MainAppWrapper>
-    </Router>
+  <GlobalStyles /> 
+  <MainAppWrapper>
+    <Navbar>
+      <h2>🚚 ShipEase</h2>
+      <div>
+        <NavLink to="/">Estimate</NavLink>
+        <NavLink to="/history">History</NavLink>
+      </div>
+    </Navbar>
+    <ContentArea>
+      <Routes>
+        <Route path="/" element={<ProEstimateForm onEstimate={handleEstimate} />} />
+        <Route path="/history" element={<HistoryPage />} />
+      </Routes>
+    </ContentArea>
+
+    <Footer>
+      © 2025 ShipEase <br />
+      Designed & Developed by Aman Kumar <br />
+      📧 <a href="mailto:amanbkp9135@gmail.com" style={{ color: '#93c5fd' }}>amanbkp9135@gmail.com</a> | 
+      📞 <a href="tel:+919876543210" style={{ color: '#93c5fd' }}>+91-9135896770</a>
+    </Footer>
+  </MainAppWrapper>
+</Router>
+
   );
 };
 

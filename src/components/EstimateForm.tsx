@@ -19,35 +19,19 @@ const GlassCard = styled(motion.div)`
   box-shadow: 0 8px 40px rgba(31,38,135,0.18), 0 1.5px 8px #1e293b33;
   backdrop-filter: blur(28px);
   border-radius: 1.7rem;
-  padding: 2.5rem 2.5rem 2.2rem 2.5rem; /* Default padding */
-  max-width: 440px; /* Default max-width for desktop */
-  margin: 0 auto; 
+  border: 1.5px solid #e0e7ff44;
+  padding: 2.5rem 2.5rem 2.2rem 2.5rem;
+  width: 500px;
   color: #22223b;
   animation: ${fadeIn} 0.8s;
   position: relative;
-
-  @media (max-width: 768px) {
-    max-width: 90%; /* Adjust max-width for tablets */
-    padding: 2rem 2rem 1.8rem 2rem;
-  }
-
-  @media (max-width: 480px) {
-    max-width: 95%; /* Adjust max-width for mobile */
-    border-radius: 1.2rem;
-    padding: 1.5rem 1.5rem 1.2rem 1.5rem;
-  }
 `;
 
 const AppLogo = styled.div`
   text-align: center;
-  font-size: 2.4rem; /* Default font size */
+  font-size: 2.4rem;
   margin-bottom: 1.8rem;
   color: #2563eb;
-
-  @media (max-width: 480px) {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-  }
 `;
 
 const StepperBar = styled.div`
@@ -56,30 +40,20 @@ const StepperBar = styled.div`
   justify-content: center;
   gap: 6px;
   margin-bottom: 2rem;
-
-  @media (max-width: 480px) {
-    gap: 4px; /* Smaller gap on mobile */
-    margin-bottom: 1.5rem;
-  }
 `;
 
 const Step = styled.div<{active: boolean}>`
   height: 10px;
-  width: 32px; /* Default width */
+  width: 32px;
   border-radius: 8px;
   background: ${({active}) => active ? "linear-gradient(90deg,#2563eb,#60a5fa)" : "#cbd5e1"};
   transition: background 0.3s;
-
-  @media (max-width: 480px) {
-    width: 24px; /* Smaller width on mobile */
-    height: 8px;
-  }
 `;
 
 const FloatingLabel = styled.label<{active: boolean}>`
   position: absolute;
   left: 20px;
-  top: ${({active}) => active ? "11px" : "24px"}; /* Adjust top for default/active state */
+  top: ${({active}) => active ? "11px" : "24px"};
   font-size: ${({active}) => active ? "0.87rem" : "1.08rem"};
   color: ${({active}) => active ? "#2563eb" : "#64748b"};
   background: transparent;
@@ -87,28 +61,21 @@ const FloatingLabel = styled.label<{active: boolean}>`
   pointer-events: none;
   transition: 0.2s all;
   z-index: 2;
-
-  @media (max-width: 480px) {
-    left: 15px; /* Adjust for smaller padding of input */
-    top: ${({active}) => active ? "9px" : "21px"}; /* Adjust for smaller input height */
-    font-size: ${({active}) => active ? "0.8rem" : "1rem"};
-  }
 `;
 
 const InputGroup = styled.div`
   position: relative;
   margin-bottom: 1.8rem;
-  z-index: 1; 
+  z-index: 1; /* Ensures proper stacking context */
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 1.1rem 1rem 0.7rem 1rem; /* Default padding */
-  padding-top: 1.5rem; /* Ensures text doesn't overlap floating label */
+  padding: 1.1rem 1rem 0.7rem 1rem;
   border-radius: 14px;
   border: 1.5px solid #cbd5e1;
   background: #f8fafc88;
-  font-size: 1.11rem; /* Default font size */
+  font-size: 1.11rem;
   color: #111;
   transition: border-color 0.2s;
   &:focus {
@@ -116,34 +83,22 @@ const Input = styled.input`
     outline: none;
     background: #f1f5f988;
   }
-
-  @media (max-width: 480px) {
-    padding: 0.9rem 0.8rem 0.5rem 0.8rem; /* Smaller padding on mobile */
-    padding-top: 1.3rem; /* Adjusted for mobile floating label */
-    font-size: 1rem;
-    border-radius: 12px;
-  }
+  padding-top: 1.5rem; /* Ensures text doesn't overlap floating label */
 `;
 
 const Select = styled.select`
   width: 100%;
-  padding: 1.1rem 1rem 0.7rem 1rem; /* Default padding */
+  padding: 1.1rem 1rem 0.7rem 1rem;
   border-radius: 14px;
   border: 1.5px solid #cbd5e1;
   background: #f8fafc88;
-  font-size: 1.11rem; /* Default font size */
+  font-size: 1.11rem;
   color: #111;
   margin-bottom: 0.5rem;
   &:focus {
     border-color: #2563eb;
     outline: none;
     background: #f1f5f988;
-  }
-
-  @media (max-width: 480px) {
-    padding: 0.9rem 0.8rem 0.5rem 0.8rem; /* Smaller padding on mobile */
-    font-size: 1rem;
-    border-radius: 12px;
   }
 `;
 
@@ -152,8 +107,8 @@ const NextButton = styled.button`
   color: #fff;
   border: none;
   border-radius: 9px;
-  padding: 1rem 1.7rem; /* Default padding */
-  font-size: 1.13rem; /* Default font size */
+  padding: 1rem 1.7rem;
+  font-size: 1.13rem;
   font-weight: 600;
   margin-top: 0.3rem;
   cursor: pointer;
@@ -164,26 +119,13 @@ const NextButton = styled.button`
   transition: background 0.21s;
   &:hover { background: linear-gradient(90deg,#60a5fa,#2563eb);}
   &:disabled { background: #cbd5e1; color: #94a3b8;}
-
-  @media (max-width: 480px) {
-    padding: 0.8rem 1.2rem; /* Smaller padding on mobile */
-    font-size: 1.05rem;
-    gap: 0.5rem;
-    border-radius: 7px;
-  }
 `;
 
 const ErrorText = styled.div`
   color: #dc2626;
-  font-size: 1.03rem; /* Default font size */
+  font-size: 1.03rem;
   margin-bottom: 1.1rem;
   min-height: 1.1rem;
-
-  @media (max-width: 480px) {
-    font-size: 0.9rem;
-    margin-bottom: 0.8rem;
-    min-height: 0.9rem;
-  }
 `;
 
 const SuccessIcon = styled(FaCheckCircle)`
@@ -191,11 +133,6 @@ const SuccessIcon = styled(FaCheckCircle)`
   font-size: 2.2rem;
   display: block;
   margin: 0 auto 0.7rem auto;
-
-  @media (max-width: 480px) {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-  }
 `;
 
 const LoadingSpinner = styled.div`
@@ -209,11 +146,6 @@ const LoadingSpinner = styled.div`
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-  }
-
-  @media (max-width: 480px) {
-    width: 28px;
-    height: 28px;
   }
 `;
 
@@ -311,14 +243,15 @@ export default function ProEstimateForm({ onEstimate }) {
   };
 
   return (
+    // CRITICAL CHANGES HERE: Removed minHeight and background. Added flex properties and padding.
     <div style={{
-      padding: "2rem 1rem", 
+      padding: "2rem 1rem", /* This padding creates space from the top of the ContentArea */
       fontFamily: "Poppins, sans-serif",
-      display: "flex",       
-      justifyContent: "center", 
-      alignItems: "flex-start", 
-      flexGrow: 1,           
-      width: "100%",         
+      display: "flex",       /* Use flexbox to center GlassCard */
+      justifyContent: "center", /* Centers GlassCard horizontally */
+      alignItems: "flex-start", /* Aligns GlassCard to the top, allowing padding to push it down */
+      flexGrow: 1,           /* Allows this div to fill available vertical space from ContentArea */
+      width: "100%",         /* Ensure it takes full width */
     }}>
       <GlassCard
         initial={{ opacity: 0, scale: 0.94 }}
@@ -413,7 +346,7 @@ export default function ProEstimateForm({ onEstimate }) {
                   style={{ textAlign: "center", marginTop: "2rem" }}
                 >
                   <SuccessIcon />
-                  <div style={{ color: "#22c55e", fontWeight: 600, marginTop: 5 }}>Estimate calculated!</div>
+                  <div style={{ color: "#22c55e", fontWeight: 600, marginTop: 5 }}>Estimate Processing...</div>
                 </motion.div>
               )}
               {loading && <LoadingSpinner />}
@@ -424,3 +357,5 @@ export default function ProEstimateForm({ onEstimate }) {
     </div>
   );
 }
+
+
