@@ -1,4 +1,3 @@
-// src/styles/GlobalStyles.tsx
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
@@ -11,19 +10,18 @@ const GlobalStyles = createGlobalStyle`
 
   /* Base font size for rem units, easier scaling */
   html {
-    font-size: 16px; /* Base for rem units */
+    font-size: 16px;
   }
 
-  /* CRITICAL: Ensure html, body, and the #root element allow scrolling */
+  /* ✅ FIXED: Don't force scrolling unless needed */
   html, body, #root { 
-    height: 100%; 
+    min-height: 100vh;   /* Ensure full height only when needed */
     width: 100%;
-    overflow-y: scroll !important;   
-    overflow-x: hidden; 
+    overflow-x: hidden;
     
     color: #1e293b;
     font-family: 'Poppins', Arial, sans-serif;
-    line-height: 1.5; /* Good default for readability */
+    line-height: 1.5;
   }
 
   h1, h2, h3 {
@@ -32,16 +30,19 @@ const GlobalStyles = createGlobalStyle`
     font-weight: 700;
     letter-spacing: 0.02em;
     margin: 0;
-    line-height: 1.2; /* Tighter line-height for headings */
+    line-height: 1.2;
   }
+
   a {
     color: #2563eb;
     text-decoration: none;
     transition: color 0.2s;
   }
+
   a:hover {
     color: #60a5fa;
   }
+
   ::selection {
     background: #60a5fa44;
   }

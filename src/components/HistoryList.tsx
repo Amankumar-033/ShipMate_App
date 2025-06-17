@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useAppContext } from '../context/AppContext';
-import Result from './Results'; // Assuming Result component is used for displaying history items
+import Result from './Results';
 
 interface Estimate {
   origin: string;
@@ -15,14 +15,12 @@ interface Estimate {
 }
 
 const PageContainer = styled.div`
-  min-height: 100vh; /* Ensures it takes at least full viewport height */
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  padding: 3rem 1rem; /* Default padding */
+  min-height: 100vh;
+  padding: 3rem 1rem;
   font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: auto; /* Allow scrolling for this page if content overflows */
 
   @media (max-width: 768px) {
     padding: 2rem 0.8rem;
@@ -31,7 +29,7 @@ const PageContainer = styled.div`
 
 const Heading = styled.h1`
   color: #f1f5f9;
-  font-size: 2rem; /* Default font size */
+  font-size: 2rem;
   margin-bottom: 2rem;
 
   @media (max-width: 480px) {
@@ -44,17 +42,27 @@ const HistoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  width: 100%;
-  max-width: 600px; /* Max width for desktop */
+  width: 60vw;
+  max-width: 1000px;
+  padding-left:4rem;
 
   @media (max-width: 768px) {
-    max-width: 90%; /* Adjust width for tablets */
+    width: 95vw;
   }
 
   @media (max-width: 480px) {
-    max-width: 95%; /* Adjust width for mobile */
+    width: 100%;
     gap: 1rem;
   }
+`;
+
+const CardWrapper = styled.div`
+  width: 100%;
+  background: #334155;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  color: #f1f5f9;
 `;
 
 const NoEstimatesText = styled.p`
@@ -73,24 +81,18 @@ const HistoryPage: React.FC = () => {
   return (
     <PageContainer>
       <Heading>📜 Shipping History</Heading>
-      <HistoryWrapper>
-        {previousEstimates.length === 0 ? (
-          <NoEstimatesText>No estimates calculated yet.</NoEstimatesText>
-        ) : (
-          previousEstimates.map((est: Estimate, index: number) => (
-            <Result
-              key={index}
-              origin={est.origin}
-              destination={est.destination}
-              distanceKm={est.distanceKm}
-              weight={est.weight}
-              shippingOption={est.shippingOption}
-              totalCost={est.totalCost}
-              currency={est.currency}
-            />
-          ))
-        )}
-      </HistoryWrapper>
+
+      {previousEstimates.length === 0 ? (
+        <NoEstimatesText>No estimates calculated yet.</NoEstimatesText>
+      ) : (
+        <HistoryWrapper>
+          {previousEstimates.map((est: Estimate, index: number) => (
+            <CardWrapper key={index}>
+              <Result {...est} />
+            </CardWrapper>
+          ))}
+        </HistoryWrapper>
+      )}
     </PageContainer>
   );
 };
