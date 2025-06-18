@@ -91,7 +91,7 @@ const Label = styled.p`
   }
 
   span {
-    flex-grow: 1; /* Allow value to take remaining space */
+    flex-grow: 0; /* Allow value to take remaining space */
     word-break: break-word; /* Break long words */
   }
   

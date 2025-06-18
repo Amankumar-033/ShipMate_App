@@ -1,14 +1,21 @@
-// src/components/ProEstimateForm.tsx
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaMapMarkerAlt, FaWeight, FaShippingFast, FaDollarSign, FaArrowRight, FaCheckCircle } from "react-icons/fa";
+import {
+  FaMapMarkerAlt, FaWeight, FaShippingFast, FaDollarSign,
+  FaArrowRight, FaCheckCircle
+} from "react-icons/fa";
 import { getDistanceKm, convertCurrency } from '../services/api';
 import { calculateCost } from '../utils/calculations';
-import { STANDARD_MULTIPLIER, EXPRESS_MULTIPLIER, DEFAULT_CURRENCY } from '../utils/constants';
+import {
+  STANDARD_MULTIPLIER,
+  EXPRESS_MULTIPLIER,
+  DEFAULT_CURRENCY
+} from '../utils/constants';
 import { useAppContext } from '../context/AppContext';
 import Result from './Results';
 
+// Animations and styled-components
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(16px);}
   to { opacity: 1; transform: translateY(0);}
@@ -20,11 +27,10 @@ const GlassCard = styled(motion.div)`
   backdrop-filter: blur(28px);
   border-radius: 1.7rem;
   border: 1.5px solid #e0e7ff44;
-  padding: 2.5rem 2.5rem 2.2rem 2.5rem;
+  padding: 2.5rem;
   width: 500px;
   color: #22223b;
   animation: ${fadeIn} 0.8s;
-  position: relative;
 `;
 
 const AppLogo = styled.div`
@@ -36,26 +42,24 @@ const AppLogo = styled.div`
 
 const StepperBar = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
   gap: 6px;
   margin-bottom: 2rem;
 `;
 
-const Step = styled.div<{active: boolean}>`
+const Step = styled.div<{ active: boolean }>`
   height: 10px;
   width: 32px;
   border-radius: 8px;
-  background: ${({active}) => active ? "linear-gradient(90deg,#2563eb,#60a5fa)" : "#cbd5e1"};
-  transition: background 0.3s;
+  background: ${({ active }) => active ? "linear-gradient(90deg,#2563eb,#60a5fa)" : "#cbd5e1"};
 `;
 
-const FloatingLabel = styled.label<{active: boolean}>`
+const FloatingLabel = styled.label<{ active: boolean }>`
   position: absolute;
   left: 20px;
-  top: ${({active}) => active ? "11px" : "24px"};
-  font-size: ${({active}) => active ? "0.87rem" : "1.08rem"};
-  color: ${({active}) => active ? "#2563eb" : "#64748b"};
+  top: 24px;
+  font-size: 1.08rem;
+  color: #64748b;
   background: transparent;
   padding: 0 5px;
   pointer-events: none;
@@ -66,24 +70,21 @@ const FloatingLabel = styled.label<{active: boolean}>`
 const InputGroup = styled.div`
   position: relative;
   margin-bottom: 1.8rem;
-  z-index: 1; /* Ensures proper stacking context */
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 1.1rem 1rem 0.7rem 1rem;
+  padding: 1.5rem 1rem 0.7rem 1rem;
   border-radius: 14px;
   border: 1.5px solid #cbd5e1;
   background: #f8fafc88;
   font-size: 1.11rem;
   color: #111;
-  transition: border-color 0.2s;
   &:focus {
     border-color: #2563eb;
     outline: none;
     background: #f1f5f988;
   }
-  padding-top: 1.5rem; /* Ensures text doesn't overlap floating label */
 `;
 
 const Select = styled.select`
@@ -152,7 +153,7 @@ const LoadingSpinner = styled.div`
 const steps = [
   { label: "Origin", icon: <FaMapMarkerAlt />, placeholder: "Origin address/city" },
   { label: "Destination", icon: <FaMapMarkerAlt />, placeholder: "Destination address/city" },
-  { label: "Weight", icon: <FaWeight />, placeholder: "Weight (kg)" },
+  { label: "Weight", icon: <FaWeight />, placeholder: "Weight" },
   { label: "Option", icon: <FaShippingFast />, options: ["Standard", "Express"] },
   { label: "Currency", icon: <FaDollarSign />, options: ["USD", "EUR", "JPY"] }
 ];
@@ -194,7 +195,10 @@ export default function ProEstimateForm({ onEstimate }) {
     setStep((s) => Math.min(steps.length - 1, s + 1));
   };
 
-  const handlePrev = () => { setStep((s) => Math.max(0, s - 1)); setError(""); };
+  const handlePrev = () => {
+    setStep((s) => Math.max(0, s - 1));
+    setError("");
+  };
 
   const handleSubmit = async () => {
     const err = validateStep();
@@ -243,15 +247,14 @@ export default function ProEstimateForm({ onEstimate }) {
   };
 
   return (
-    // CRITICAL CHANGES HERE: Removed minHeight and background. Added flex properties and padding.
     <div style={{
-      padding: "2rem 1rem", /* This padding creates space from the top of the ContentArea */
+      padding: "2rem 1rem",
       fontFamily: "Poppins, sans-serif",
-      display: "flex",       /* Use flexbox to center GlassCard */
-      justifyContent: "center", /* Centers GlassCard horizontally */
-      alignItems: "flex-start", /* Aligns GlassCard to the top, allowing padding to push it down */
-      flexGrow: 1,           /* Allows this div to fill available vertical space from ContentArea */
-      width: "100%",         /* Ensure it takes full width */
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "flex-start",
+      flexGrow: 1,
+      width: "100%",
     }}>
       <GlassCard
         initial={{ opacity: 0, scale: 0.94 }}
@@ -267,15 +270,7 @@ export default function ProEstimateForm({ onEstimate }) {
         </StepperBar>
         {result ? (
           <>
-            <Result
-              origin={result.origin}
-              destination={result.destination}
-              distanceKm={result.distanceKm}
-              weight={result.weight}
-              shippingOption={result.shippingOption}
-              totalCost={result.totalCost}
-              currency={result.currency}
-            />
+            <Result {...result} />
             <div style={{ textAlign: "center", marginTop: "2rem" }}>
               <NextButton type="button" onClick={handleEstimateAgain}>
                 Estimate Again
@@ -308,15 +303,14 @@ export default function ProEstimateForm({ onEstimate }) {
                       value={fields[step]}
                       onChange={handleInput}
                       onFocus={() => setIsFocused(true)}
-                      onBlur={(e) => {
-                          setIsFocused(false);
-                          setTouched((old) => { const arr = [...old]; arr[step] = true; return arr; });
-                      }}
+                      onBlur={() => setIsFocused(false)}
                       aria-label={steps[step].label}
                     />
-                    <FloatingLabel active={fields[step] !== "" || isFocused}>
-                      {steps[step].placeholder}
-                    </FloatingLabel>
+                    {fields[step] === "" && !isFocused && (
+                      <FloatingLabel active={false}>
+                        {steps[step].placeholder}
+                      </FloatingLabel>
+                    )}
                   </>
                 )}
               </InputGroup>
@@ -357,5 +351,3 @@ export default function ProEstimateForm({ onEstimate }) {
     </div>
   );
 }
-
-

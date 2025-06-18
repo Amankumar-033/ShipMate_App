@@ -1,4 +1,3 @@
-// src/components/HistoryList.tsx
 import React from 'react';
 import styled from 'styled-components';
 import { useAppContext } from '../context/AppContext';
@@ -15,12 +14,14 @@ interface Estimate {
 }
 
 const PageContainer = styled.div`
-  min-height: 100vh;
   padding: 3rem 1rem;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
   font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 1rem;
+  width: 35%;
 
   @media (max-width: 768px) {
     padding: 2rem 0.8rem;
@@ -42,12 +43,12 @@ const HistoryWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  width: 60vw;
+  width: 100%;
   max-width: 1000px;
-  padding-left:4rem;
+  margin: 0 auto;
 
   @media (max-width: 768px) {
-    width: 95vw;
+    width: 95%;
   }
 
   @media (max-width: 480px) {
@@ -57,7 +58,6 @@ const HistoryWrapper = styled.div`
 `;
 
 const CardWrapper = styled.div`
-  width: 100%;
   background: #334155;
   padding: 1.25rem;
   border-radius: 1rem;
