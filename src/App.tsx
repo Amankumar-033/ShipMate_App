@@ -101,7 +101,7 @@ const App: React.FC = () => {
   <GlobalStyles /> 
   <MainAppWrapper>
     <Navbar>
-      <h2>🚚 ShipEase</h2>
+      <h2>🚚 ShipMate</h2>
       <div>
         <NavLink to="/">Estimate</NavLink>
         <NavLink to="/history">History</NavLink>
