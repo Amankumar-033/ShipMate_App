@@ -1,24 +1,30 @@
+
+/*
+This component is part of a shipping estimation application.
+It allows users to input origin, destination, weight, shipping option, and currency to calculate shipping costs.
+It uses OpenRouteService for geocoding and distance calculation, and ExchangeRate-API for currency conversion.
+The component includes a stepper interface, input validation, and displays results or errors accordingly.
+*/
+
+
+
 import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  FaMapMarkerAlt,
-  FaWeight,
-  FaShippingFast,
-  FaDollarSign,
-  FaArrowRight,
-  FaCheckCircle,
-} from "react-icons/fa";
+import {FaMapMarkerAlt,FaWeight,FaShippingFast,FaDollarSign,FaArrowRight,FaCheckCircle} from "react-icons/fa";
 import axios from "axios";
 import { getDistanceKm, convertCurrency } from "../services/api";
 import { calculateCost } from "../utils/calculations";
-import {
-  STANDARD_MULTIPLIER,
-  EXPRESS_MULTIPLIER,
-  DEFAULT_CURRENCY,
-} from "../utils/constants";
+import {STANDARD_MULTIPLIER,EXPRESS_MULTIPLIER,DEFAULT_CURRENCY} from "../utils/constants";
 import { useAppContext } from "../context/AppContext";
 import Result from "./Results";
+
+
+
+
+
+
+
 
 const ORS_API_KEY = import.meta.env.VITE_ORS_API_KEY;
 
@@ -26,8 +32,6 @@ const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 `;
-
-
 
 
 const GlassCard = styled(motion.div)`
@@ -248,146 +252,6 @@ const SuggestionItem = styled.li<{ disabled?: boolean }>`
     font-size: 0.95rem;
   }
 `;
-
-
-
-
-
-// const GlassCard = styled(motion.div)`
-//   background: rgba(255,255,255,0.18);
-//   box-shadow: 0 8px 40px rgba(31,38,135,0.18), 0 1.5px 8px #1e293b33;
-//   backdrop-filter: blur(28px);
-//   border-radius: 1.7rem;
-//   border: 1.5px solid #e0e7ff44;
-//   padding: 2.5rem;
-//   width: 500px;
-//   color: #22223b;
-//   animation: ${fadeIn} 0.8s;
-// `;
-
-// const AppLogo = styled.div`
-//   text-align: center;
-//   font-size: 2.4rem;
-//   margin-bottom: 1.8rem;
-//   color: #2563eb;
-// `;
-
-// const StepperBar = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   gap: 6px;
-//   margin-bottom: 2rem;
-// `;
-
-// const Step = styled.div<{ active: boolean }>`
-//   height: 10px;
-//   width: 32px;
-//   border-radius: 8px;
-//   background: ${({ active }) =>
-//     active ? "linear-gradient(90deg,#2563eb,#60a5fa)" : "#cbd5e1"};
-// `;
-
-// const FloatingLabel = styled.label<{ active: boolean }>`
-//   position: absolute;
-//   left: 20px;
-//   top: 24px;
-//   font-size: 1.08rem;
-//   color: #64748b;
-//   background: transparent;
-//   padding: 0 5px;
-//   pointer-events: none;
-//   transition: 0.2s all;
-//   z-index: 2;
-// `;
-
-// const InputGroup = styled.div`
-//   position: relative;
-//   margin-bottom: 1.8rem;
-// `;
-
-// const Select = styled.select`
-//   width: 100%;
-//   padding: 1.1rem 1rem 0.7rem 1rem;
-//   border-radius: 14px;
-//   border: 1.5px solid #cbd5e1;
-//   background: #f8fafc88;
-//   font-size: 1.11rem;
-//   color: #111;
-//   margin-bottom: 0.5rem;
-//   &:focus {
-//     border-color: #2563eb;
-//     outline: none;
-//     background: #f1f5f988;
-//   }
-// `;
-
-// const NextButton = styled.button`
-//   background: linear-gradient(90deg,#2563eb,#60a5fa);
-//   color: #fff;
-//   border: none;
-//   border-radius: 9px;
-//   padding: 1rem 1.7rem;
-//   font-size: 1.13rem;
-//   font-weight: 600;
-//   margin-top: 0.3rem;
-//   cursor: pointer;
-//   box-shadow: 0 4px 16px 0 #2563eb33;
-//   display: flex;
-//   align-items: center;
-//   gap: 0.7rem;
-//   transition: background 0.21s;
-//   &:hover { background: linear-gradient(90deg,#60a5fa,#2563eb); }
-//   &:disabled { background: #cbd5e1; color: #94a3b8; cursor: default; }
-// `;
-
-// const ErrorText = styled.div`
-//   color: #dc2626;
-//   font-size: 1.03rem;
-//   margin-bottom: 1.1rem;
-//   min-height: 1.1rem;
-// `;
-
-// const SuccessIcon = styled(FaCheckCircle)`
-//   color: #22c55e;
-//   font-size: 2.2rem;
-//   display: block;
-//   margin: 0 auto 0.7rem auto;
-// `;
-
-// const LoadingSpinner = styled.div`
-//   margin: 1.5rem auto 0 auto;
-//   border: 4px solid #e0e7ff;
-//   border-top: 4px solid #6366f1;
-//   border-radius: 50%;
-//   width: 32px;
-//   height: 32px;
-//   animation: spin 1s linear infinite;
-//   @keyframes spin {
-//     0% { transform: rotate(0deg); }
-//     100% { transform: rotate(360deg); }
-//   }
-// `;
-
-// const SuggestionList = styled.ul`
-//   position: absolute;
-//   top: 100%; left: 0; right: 0;
-//   background: #fff;
-//   border: 1px solid #ddd;
-//   max-height: 200px;
-//   overflow-y: auto;
-//   z-index: 20;
-//   margin: 0; padding: 0;
-//   list-style: none;
-// `;
-
-// const SuggestionItem = styled.li<{ disabled?: boolean }>`
-//   padding: 0.7rem 1rem;
-//   cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
-//   color: ${({ disabled }) => (disabled ? "#999" : "#111")};
-//   &:hover {
-//     background: ${({ disabled }) => (disabled ? "transparent" : "#f0f0f0")};
-//   }
-// `;
 
 
 const steps = [

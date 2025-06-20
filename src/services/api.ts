@@ -1,11 +1,20 @@
+/*
+    This file contains functions to interact with external APIs
+  - Geocoding addresses to coordinates using OpenRouteService
+  - Calculating distances between two locations
+  - Converting currency using exchangerate.host
+*/
+
+
 import axios from 'axios';
 
-// Your ORS API Key from .env.local
+
+
 const ORS_API_KEY = import.meta.env.VITE_ORS_API_KEY;
 
-/**
- * Converts a location name (e.g. "Delhi") to coordinates [longitude, latitude]
- */
+ // Ensure the ORS_API_KEY is set
+ //Converts a location name (e.g. "Delhi") to coordinates [longitude, latitude]
+
 export async function geocodeAddress(address: string): Promise<[number, number]> {
   const response = await axios.get('https://api.openrouteservice.org/geocode/search', {
     params: {
@@ -22,9 +31,8 @@ export async function geocodeAddress(address: string): Promise<[number, number]>
   return response.data.features[0].geometry.coordinates; // [lng, lat]
 }
 
-/**
- * Gets the driving distance (in kilometers) between two addresses using ORS
- */
+
+//This function calculates the distance in kilometers between two locations using OpenRouteService's matrix API
 export async function getDistanceKm(origin: string, destination: string): Promise<number> {
   const originCoords = await geocodeAddress(origin);
   const destCoords = await geocodeAddress(destination);
@@ -47,9 +55,8 @@ export async function getDistanceKm(origin: string, destination: string): Promis
   return distanceMeters / 1000; // convert to kilometers
 }
 
-/**
- * Converts a cost from USD to selected currency using exchangerate.host
- */
+
+//This function converts an amount from USD to another currency using the ExchangeRate-API
 export async function convertCurrency(amount: number, toCurrency: string): Promise<number> {
   if (toCurrency === 'USD') return amount;
 
