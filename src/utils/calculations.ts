@@ -1,8 +1,9 @@
-/**
- * Calculate shipping cost given distance (km), weight (kg), and option multiplier.
- */
-export function calculateCost(distanceKm: number, weight: number, multiplier: number): number {
-  // cost = base rate * distance * weight * multiplier
-  const baseRate = 0.05; // using constant from constants (could also import)
+export function calculateCost(distanceKm: number,weight: number,multiplier: number, weightUnit: 'kg' | 'lb'): number {
+  const baseRatePerKg = 0.05;
+  const conversionFactor = 2.20462; // 1 kg = 2.20462 lb
+  const baseRate = weightUnit === 'kg' ? baseRatePerKg : baseRatePerKg / conversionFactor;
+
   return distanceKm * weight * baseRate * multiplier;
 }
+
+//This will calculate the cost of shipping based on distance, weight, and a multiplier.

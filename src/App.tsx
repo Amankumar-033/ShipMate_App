@@ -1,4 +1,3 @@
-// src/App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import ProEstimateForm from './components/EstimateForm';
@@ -107,6 +106,10 @@ const App: React.FC = () => {
         <NavLink to="/history">History</NavLink>
       </div>
     </Navbar>
+
+
+
+    
     <ContentArea>
       <Routes>
         <Route path="/" element={<ProEstimateForm onEstimate={handleEstimate} />} />
@@ -114,6 +117,8 @@ const App: React.FC = () => {
       </Routes>
     </ContentArea>
 
+
+    
     <Footer>
       © 2025 ShipEase <br />
       Designed & Developed by Aman Kumar <br />
