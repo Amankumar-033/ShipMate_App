@@ -100,7 +100,7 @@ const HistoryPage: React.FC = () => {
         <HistoryWrapper>
           {previousEstimates.map((est: Estimate, index: number) => (
             <CardWrapper key={index}>
-              <Result {...est} />
+              <Result weightUnit={'kg'} {...est} />
             </CardWrapper>
           ))}
         </HistoryWrapper>
