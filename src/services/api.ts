@@ -7,9 +7,6 @@
 
 
 import axios from 'axios';
-
-
-
 const ORS_API_KEY = import.meta.env.VITE_ORS_API_KEY;
 
  // Ensure the ORS_API_KEY is set
@@ -76,15 +73,6 @@ export async function convertCurrency(amount: number, toCurrency: string): Promi
     throw new Error('Currency conversion failed');
   }
 }
-
-
-
-
-
-
-
-
-
 
 
 
