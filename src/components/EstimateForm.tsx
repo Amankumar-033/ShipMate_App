@@ -362,7 +362,7 @@ export default function EstimateForm({ onEstimate }: EstimateFormProps) {
         shippingOption === "Express" ? EXPRESS_MULTIPLIER : STANDARD_MULTIPLIER;
       let totalCost = calculateCost(distanceKm, +weight, mult, weightUnit);
       if (currency !== DEFAULT_CURRENCY) {
-        totalCost = await convertCurrency(totalCost, currency);
+        totalCost = await convertCurrency(totalCost, DEFAULT_CURRENCY,currency);
       }
       const est: Estimate = {
         origin,

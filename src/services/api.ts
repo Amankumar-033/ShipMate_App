@@ -54,7 +54,7 @@ export async function getDistanceKm(origin: string, destination: string): Promis
 
 
 //This function converts an amount from USD to another currency using the ExchangeRate-API
-export async function convertCurrency(amount: number, toCurrency: string): Promise<number> {
+export async function convertCurrency(amount: number, toCurrency: string, currency: any): Promise<number> {
   if (toCurrency === 'USD') return amount;
 
   const API_KEY = import.meta.env.VITE_CURRENCY_API_KEY;
