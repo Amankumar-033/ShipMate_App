@@ -164,6 +164,8 @@ const Result: React.FC<ResultProps> = ({
       <Label>
         <strong>Total Cost:</strong> <span>{totalCost.toFixed(2)} {currency}</span>
       </Label>
+      <button>View Route</button>
+
     </Card>
   );
 };
