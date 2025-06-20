@@ -1,13 +1,11 @@
-/*
+ /*
 
- This is the HistoryPage component that displays the shipping history of previous estimates.
- It uses styled-components for styling and fetches data from the AppContext.
- It maps through the previous estimates and displays each one using the Result component, 
- which formats the shipping details in a card layout. If there are no estimates, it shows a message indicating that no
+  This is the HistoryPage component that displays the shipping history of previous estimates.
+  It uses styled-components for styling and fetches data from the AppContext.
+  It maps through the previous estimates and displays each one using the Result component, 
+  which formats the shipping details in a card layout. If there are no estimates, it shows a message indicating that no
 
-*/
-
-
+ */
 
 
 import React from 'react';
@@ -35,8 +33,18 @@ const PageContainer = styled.div`
   border-radius: 1rem;
   width: 35%;
 
+  @media (max-width: 1024px) {
+    width: 60%;
+  }
+
   @media (max-width: 768px) {
-    padding: 2rem 0.8rem;
+    width: 85%;
+    padding: 2rem 1rem;
+  }
+
+  @media (max-width: 480px) {
+    width: 95%;
+    padding: 1.5rem 0.8rem;
   }
 `;
 
@@ -45,9 +53,14 @@ const Heading = styled.h1`
   font-size: 2rem;
   margin-bottom: 2rem;
 
-  @media (max-width: 480px) {
-    font-size: 1.7rem;
+  @media (max-width: 768px) {
+    font-size: 1.8rem;
     margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
   }
 `;
 
@@ -60,11 +73,10 @@ const HistoryWrapper = styled.div`
   margin: 0 auto;
 
   @media (max-width: 768px) {
-    width: 95%;
+    width: 100%;
   }
 
   @media (max-width: 480px) {
-    width: 100%;
     gap: 1rem;
   }
 `;
@@ -75,6 +87,14 @@ const CardWrapper = styled.div`
   border-radius: 1rem;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
   color: #f1f5f9;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.85rem;
+  }
 `;
 
 const NoEstimatesText = styled.p`

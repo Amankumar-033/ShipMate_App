@@ -491,6 +491,9 @@ export default function EstimateForm({ onEstimate }: EstimateFormProps) {
     const [origin, destination, weight, shippingOption, currency] = fields;
     try {
       const distanceKm = await getDistanceKm(origin, destination);
+      if (distanceKm === 0)
+      throw new Error("Route not possible  between the selected locations.\n Please choose locations connected by roadways.");
+
       const mult =
         shippingOption === "Express" ? EXPRESS_MULTIPLIER : STANDARD_MULTIPLIER;
       let totalCost = calculateCost(distanceKm, +weight, mult, weightUnit);
