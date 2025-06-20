@@ -129,9 +129,9 @@ src/
 
 ---
 
-## 📽 Optional: Video Walkthrough
 
-[Watch 2-min demo on Loom](https://loom.com/your-recording-url)
+
+
 
 
 
