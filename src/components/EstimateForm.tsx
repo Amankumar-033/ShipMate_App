@@ -161,7 +161,21 @@ const steps = [
   { label: "Currency", icon: <FaDollarSign />, options: ["USD", "EUR", "JPY"] }
 ];
 
-export default function ProEstimateForm({ onEstimate }) {
+type Estimate = {
+  origin: string;
+  destination: string;
+  weight: number;
+  shippingOption: string;
+  distanceKm: number;
+  totalCost: number;
+  currency: string;
+};
+
+interface ProEstimateFormProps {
+  onEstimate?: (estimate: Estimate) => void;
+}
+
+export default function ProEstimateForm({ onEstimate }: ProEstimateFormProps) {
   const [step, setStep] = useState(0);
   const [fields, setFields] = useState(["", "", "", "Standard", "USD"]);
   const [touched, setTouched] = useState([false, false, false, false, false]);
@@ -173,7 +187,7 @@ export default function ProEstimateForm({ onEstimate }) {
 
   const { addEstimate } = useAppContext();
 
-  const handleInput = (e) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const updated = [...fields];
     updated[step] = e.target.value;
     setFields(updated);
