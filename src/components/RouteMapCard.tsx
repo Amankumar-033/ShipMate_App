@@ -4,10 +4,9 @@
   and displays it on a Leaflet map. It includes a close button to remove the map.
 */
 
-
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { MapContainer, TileLayer, Polyline, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Polyline, useMap, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
@@ -25,7 +24,7 @@ const CloseButton = styled.button`
   position: absolute;
   top: 0.5rem;
   left: 0.5rem;
-  z-index: 999;
+  z-index: 1001;
   background: #ef4444;
   color: white;
   border: none;
@@ -34,6 +33,18 @@ const CloseButton = styled.button`
   height: 2rem;
   cursor: pointer;
   font-weight: bold;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+`;
+
+const Loader = styled.div`
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #475569;
+  background-color: #f8fafc;
 `;
 
 interface Props {
@@ -53,58 +64,84 @@ const FitBounds = ({ coords }: { coords: [number, number][] }) => {
 
 const RouteMapCard: React.FC<Props> = ({ origin, destination, onClose }) => {
   const [coords, setCoords] = React.useState<[number, number][]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [routeAvailable, setRouteAvailable] = React.useState(true);
 
   useEffect(() => {
     const fetchRoute = async () => {
-  try {
-    // Geocode origin and destination
-    const geocode = async (address: string) => {
-      const res = await axios.get('https://api.openrouteservice.org/geocode/search', {
-        params: {
-          api_key: import.meta.env.VITE_ORS_API_KEY,
-          text: address,
-          size: 1,
-        },
-      });
-      return res.data.features[0].geometry.coordinates; // [lng, lat]
-    };
+      setLoading(true);
+      try {
+        const geocode = async (address: string) => {
+          const res = await axios.get('https://api.openrouteservice.org/geocode/search', {
+            params: {
+              api_key: import.meta.env.VITE_ORS_API_KEY,
+              text: address,
+              size: 1,
+            },
+          });
+          return res.data.features[0].geometry.coordinates;
+        };
 
-    const originCoords = await geocode(origin);
-    const destinationCoords = await geocode(destination);
+        const originCoords = await geocode(origin);
+        const destinationCoords = await geocode(destination);
 
-    const routeRes = await axios.post(
-      'https://api.openrouteservice.org/v2/directions/driving-car/geojson',
-      {
-        coordinates: [originCoords, destinationCoords],
-      },
-      {
-        headers: {
-          Authorization: import.meta.env.VITE_ORS_API_KEY,
-          'Content-Type': 'application/json',
-        },
+        const routeRes = await axios.post(
+          'https://api.openrouteservice.org/v2/directions/driving-car/geojson',
+          {
+            coordinates: [originCoords, destinationCoords],
+          },
+          {
+            headers: {
+              Authorization: import.meta.env.VITE_ORS_API_KEY,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+
+        const line = routeRes.data.features[0]?.geometry?.coordinates;
+        if (!line || line.length === 0) {
+          setRouteAvailable(false);
+          return;
+        }
+
+        const latLngs: [number, number][] = line.map(
+          ([lng, lat]: [number, number]) => [lat, lng]
+        );
+        setCoords(latLngs);
+        setRouteAvailable(true);
+      } catch (err) {
+        console.error('Failed to fetch route:', err);
+        setRouteAvailable(false);
+      } finally {
+        setLoading(false);
       }
-    );
-
-   
-    const line = routeRes.data.features[0].geometry.coordinates; // array of [lng, lat]
-
-    // Convert them to [lat, lng] format for Leaflet
-    const latLngs: [number, number][] = line.map(([lng, lat]: [number, number]) => [lat, lng]);
-    setCoords(latLngs);
-  } catch (err) {
-    console.error('Failed to fetch route:', err);
-  }
-};
-
+    };
 
     fetchRoute();
   }, [origin, destination]);
 
+  if (loading) {
+    return (
+      <Wrapper>
+        <CloseButton onClick={onClose}>❌</CloseButton>
+        <Loader>🚗 Fetching route...</Loader>
+      </Wrapper>
+    );
+  }
+
+  if (!routeAvailable) return null;
+
   return (
     <Wrapper>
       <CloseButton onClick={onClose}>❌</CloseButton>
-      <MapContainer style={{ height: '300px', width: '100%' }} zoom={6} center={[20.5, 78.9]}>
+      <MapContainer
+        style={{ height: '300px', width: '100%' }}
+        zoom={6}
+        center={[20.5, 78.9]}
+        zoomControl={false}
+      >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <ZoomControl position="topright" />
         {coords.length > 0 && (
           <>
             <Polyline positions={coords} color="#1d4ed8" />

@@ -259,7 +259,7 @@ const steps = [
   { label: "Destination", icon: <FaMapMarkerAlt />, placeholder: "Destination address/city" },
   { label: "Weight", icon: <FaWeight />, placeholder: "Weight" },
   { label: "Option", icon: <FaShippingFast />, options: ["Standard", "Express"] },
-  { label: "Currency", icon: <FaDollarSign />, options: ["USD", "EUR", "JPY"] },
+  { label: "Currency", icon: <FaDollarSign />, options: ["USD", "EUR", "JPY", "INR"] },
 ];
 
 type Estimate = {

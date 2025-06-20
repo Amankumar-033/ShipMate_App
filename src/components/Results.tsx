@@ -115,7 +115,8 @@ const Label = styled.p`
 `;
 
 const RouteButton = styled.button`
-  margin-top: 1rem;
+  display: block;
+  margin: 1rem auto 0;  // top auto bottom
   background-color: #2563eb;
   color: white;
   font-weight: 600;
@@ -129,6 +130,7 @@ const RouteButton = styled.button`
     background-color: #1d4ed8;
   }
 `;
+
 
 interface ResultProps {
   origin: string;
@@ -186,8 +188,16 @@ const Result: React.FC<ResultProps> = ({
         <strong>ETA:</strong> <span>{estimatedTime}</span>
       </Label>
       <Label>
-        <strong>Total Cost:</strong> <span>{totalCost.toFixed(2)} {currency}</span>
+        <strong>Total Cost:</strong>{' '}
+        <span>
+          {currency === 'INR' && '₹'}
+          {currency === 'USD' && '$'}
+          {currency === 'EUR' && '€'}
+          {currency === 'JPY' && '¥'}
+          {totalCost.toFixed(2)} {currency}
+        </span>
       </Label>
+
 
       <RouteButton onClick={() => setShowMap(true)}>View Route</RouteButton>
 
