@@ -27,9 +27,12 @@ const fadeIn = keyframes`
   to { opacity: 1; transform: translateY(0); }
 `;
 
+
+
+
 const GlassCard = styled(motion.div)`
-  background: rgba(255,255,255,0.18);
-  box-shadow: 0 8px 40px rgba(31,38,135,0.18), 0 1.5px 8px #1e293b33;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 40px rgba(31, 38, 135, 0.18), 0 1.5px 8px #1e293b33;
   backdrop-filter: blur(28px);
   border-radius: 1.7rem;
   border: 1.5px solid #e0e7ff44;
@@ -37,29 +40,18 @@ const GlassCard = styled(motion.div)`
   width: 500px;
   color: #22223b;
   animation: ${fadeIn} 0.8s;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    padding: 2rem;
+  }
+
+  @media (max-width: 480px) {
+    width: 95%;
+    padding: 1.6rem;
+  }
 `;
 
-const AppLogo = styled.div`
-  text-align: center;
-  font-size: 2.4rem;
-  margin-bottom: 1.8rem;
-  color: #2563eb;
-`;
-
-const StepperBar = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 6px;
-  margin-bottom: 2rem;
-`;
-
-const Step = styled.div<{ active: boolean }>`
-  height: 10px;
-  width: 32px;
-  border-radius: 8px;
-  background: ${({ active }) =>
-    active ? "linear-gradient(90deg,#2563eb,#60a5fa)" : "#cbd5e1"};
-`;
 
 const FloatingLabel = styled.label<{ active: boolean }>`
   position: absolute;
@@ -72,11 +64,96 @@ const FloatingLabel = styled.label<{ active: boolean }>`
   pointer-events: none;
   transition: 0.2s all;
   z-index: 2;
+
+  @media (max-width: 480px) {
+    font-size: 0.95rem;
+    top: 20px;
+  }
+`;
+
+
+const SuccessIcon = styled(FaCheckCircle)`
+  color: #22c55e;
+  font-size: 2.2rem;
+  display: block;
+  margin: 0 auto 0.7rem auto;
+
+  @media (max-width: 480px) {
+    font-size: 1.8rem;
+  }
+`;
+
+
+const LoadingSpinner = styled.div`
+  margin: 1.5rem auto 0 auto;
+  border: 4px solid #e0e7ff;
+  border-top: 4px solid #6366f1;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  animation: spin 1s linear infinite;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (max-width: 480px) {
+    width: 28px;
+    height: 28px;
+  }
+`;
+
+
+
+const AppLogo = styled.div`
+  text-align: center;
+  font-size: 2.4rem;
+  margin-bottom: 1.8rem;
+  color: #2563eb;
+
+  @media (max-width: 480px) {
+    font-size: 1.9rem;
+    margin-bottom: 1.4rem;
+  }
+`;
+
+const StepperBar = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+
+  @media (max-width: 480px) {
+    gap: 4px;
+    margin-bottom: 1.5rem;
+  }
+`;
+
+const Step = styled.div<{ active: boolean }>`
+  height: 10px;
+  width: 32px;
+  border-radius: 8px;
+  background: ${({ active }) =>
+    active ? "linear-gradient(90deg,#2563eb,#60a5fa)" : "#cbd5e1"};
+
+  @media (max-width: 480px) {
+    width: 24px;
+  }
 `;
 
 const InputGroup = styled.div`
   position: relative;
   margin-bottom: 1.8rem;
+
+  @media (max-width: 480px) {
+    margin-bottom: 1.2rem;
+  }
 `;
 
 const Select = styled.select`
@@ -92,6 +169,11 @@ const Select = styled.select`
     border-color: #2563eb;
     outline: none;
     background: #f1f5f988;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem 0.8rem 0.6rem 0.8rem;
+    font-size: 1.03rem;
   }
 `;
 
@@ -110,8 +192,20 @@ const NextButton = styled.button`
   align-items: center;
   gap: 0.7rem;
   transition: background 0.21s;
-  &:hover { background: linear-gradient(90deg,#60a5fa,#2563eb); }
-  &:disabled { background: #cbd5e1; color: #94a3b8; cursor: default; }
+
+  &:hover {
+    background: linear-gradient(90deg,#60a5fa,#2563eb);
+  }
+  &:disabled {
+    background: #cbd5e1;
+    color: #94a3b8;
+    cursor: default;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    padding: 0.9rem 1.4rem;
+  }
 `;
 
 const ErrorText = styled.div`
@@ -119,38 +213,24 @@ const ErrorText = styled.div`
   font-size: 1.03rem;
   margin-bottom: 1.1rem;
   min-height: 1.1rem;
-`;
 
-const SuccessIcon = styled(FaCheckCircle)`
-  color: #22c55e;
-  font-size: 2.2rem;
-  display: block;
-  margin: 0 auto 0.7rem auto;
-`;
-
-const LoadingSpinner = styled.div`
-  margin: 1.5rem auto 0 auto;
-  border: 4px solid #e0e7ff;
-  border-top: 4px solid #6366f1;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  animation: spin 1s linear infinite;
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  @media (max-width: 480px) {
+    font-size: 0.95rem;
   }
 `;
 
 const SuggestionList = styled.ul`
   position: absolute;
-  top: 100%; left: 0; right: 0;
+  top: 100%;
+  left: 0;
+  right: 0;
   background: #fff;
   border: 1px solid #ddd;
   max-height: 200px;
   overflow-y: auto;
   z-index: 20;
-  margin: 0; padding: 0;
+  margin: 0;
+  padding: 0;
   list-style: none;
 `;
 
@@ -158,10 +238,157 @@ const SuggestionItem = styled.li<{ disabled?: boolean }>`
   padding: 0.7rem 1rem;
   cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
   color: ${({ disabled }) => (disabled ? "#999" : "#111")};
+
   &:hover {
     background: ${({ disabled }) => (disabled ? "transparent" : "#f0f0f0")};
   }
+
+  @media (max-width: 480px) {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.95rem;
+  }
 `;
+
+
+
+
+
+// const GlassCard = styled(motion.div)`
+//   background: rgba(255,255,255,0.18);
+//   box-shadow: 0 8px 40px rgba(31,38,135,0.18), 0 1.5px 8px #1e293b33;
+//   backdrop-filter: blur(28px);
+//   border-radius: 1.7rem;
+//   border: 1.5px solid #e0e7ff44;
+//   padding: 2.5rem;
+//   width: 500px;
+//   color: #22223b;
+//   animation: ${fadeIn} 0.8s;
+// `;
+
+// const AppLogo = styled.div`
+//   text-align: center;
+//   font-size: 2.4rem;
+//   margin-bottom: 1.8rem;
+//   color: #2563eb;
+// `;
+
+// const StepperBar = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   gap: 6px;
+//   margin-bottom: 2rem;
+// `;
+
+// const Step = styled.div<{ active: boolean }>`
+//   height: 10px;
+//   width: 32px;
+//   border-radius: 8px;
+//   background: ${({ active }) =>
+//     active ? "linear-gradient(90deg,#2563eb,#60a5fa)" : "#cbd5e1"};
+// `;
+
+// const FloatingLabel = styled.label<{ active: boolean }>`
+//   position: absolute;
+//   left: 20px;
+//   top: 24px;
+//   font-size: 1.08rem;
+//   color: #64748b;
+//   background: transparent;
+//   padding: 0 5px;
+//   pointer-events: none;
+//   transition: 0.2s all;
+//   z-index: 2;
+// `;
+
+// const InputGroup = styled.div`
+//   position: relative;
+//   margin-bottom: 1.8rem;
+// `;
+
+// const Select = styled.select`
+//   width: 100%;
+//   padding: 1.1rem 1rem 0.7rem 1rem;
+//   border-radius: 14px;
+//   border: 1.5px solid #cbd5e1;
+//   background: #f8fafc88;
+//   font-size: 1.11rem;
+//   color: #111;
+//   margin-bottom: 0.5rem;
+//   &:focus {
+//     border-color: #2563eb;
+//     outline: none;
+//     background: #f1f5f988;
+//   }
+// `;
+
+// const NextButton = styled.button`
+//   background: linear-gradient(90deg,#2563eb,#60a5fa);
+//   color: #fff;
+//   border: none;
+//   border-radius: 9px;
+//   padding: 1rem 1.7rem;
+//   font-size: 1.13rem;
+//   font-weight: 600;
+//   margin-top: 0.3rem;
+//   cursor: pointer;
+//   box-shadow: 0 4px 16px 0 #2563eb33;
+//   display: flex;
+//   align-items: center;
+//   gap: 0.7rem;
+//   transition: background 0.21s;
+//   &:hover { background: linear-gradient(90deg,#60a5fa,#2563eb); }
+//   &:disabled { background: #cbd5e1; color: #94a3b8; cursor: default; }
+// `;
+
+// const ErrorText = styled.div`
+//   color: #dc2626;
+//   font-size: 1.03rem;
+//   margin-bottom: 1.1rem;
+//   min-height: 1.1rem;
+// `;
+
+// const SuccessIcon = styled(FaCheckCircle)`
+//   color: #22c55e;
+//   font-size: 2.2rem;
+//   display: block;
+//   margin: 0 auto 0.7rem auto;
+// `;
+
+// const LoadingSpinner = styled.div`
+//   margin: 1.5rem auto 0 auto;
+//   border: 4px solid #e0e7ff;
+//   border-top: 4px solid #6366f1;
+//   border-radius: 50%;
+//   width: 32px;
+//   height: 32px;
+//   animation: spin 1s linear infinite;
+//   @keyframes spin {
+//     0% { transform: rotate(0deg); }
+//     100% { transform: rotate(360deg); }
+//   }
+// `;
+
+// const SuggestionList = styled.ul`
+//   position: absolute;
+//   top: 100%; left: 0; right: 0;
+//   background: #fff;
+//   border: 1px solid #ddd;
+//   max-height: 200px;
+//   overflow-y: auto;
+//   z-index: 20;
+//   margin: 0; padding: 0;
+//   list-style: none;
+// `;
+
+// const SuggestionItem = styled.li<{ disabled?: boolean }>`
+//   padding: 0.7rem 1rem;
+//   cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
+//   color: ${({ disabled }) => (disabled ? "#999" : "#111")};
+//   &:hover {
+//     background: ${({ disabled }) => (disabled ? "transparent" : "#f0f0f0")};
+//   }
+// `;
+
 
 const steps = [
   { label: "Origin", icon: <FaMapMarkerAlt />, placeholder: "Origin address/city" },

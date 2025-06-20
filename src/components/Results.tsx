@@ -152,7 +152,7 @@ const Result: React.FC<ResultProps> = ({
         <strong>Weight:</strong> <span>{weight} {weightUnit}</span>
       </Label>
       <Label className="shipping-option-label"> 
-        <strong>Shipping Option:</strong>
+        <strong>Shipping:</strong>
         <Badge type={shippingOption}>
           <span>{shippingIconEmoji}</span> 
           {shippingOption} 
