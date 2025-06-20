@@ -1,3 +1,9 @@
+
+/*
+  This file is part of the  project: ShipMate - A Shipping Cost Estimator
+*/
+
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';

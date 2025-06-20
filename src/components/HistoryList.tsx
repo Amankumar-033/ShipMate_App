@@ -1,3 +1,15 @@
+/*
+
+ This is the HistoryPage component that displays the shipping history of previous estimates.
+ It uses styled-components for styling and fetches data from the AppContext.
+ It maps through the previous estimates and displays each one using the Result component, 
+ which formats the shipping details in a card layout. If there are no estimates, it shows a message indicating that no
+
+*/
+
+
+
+
 import React from 'react';
 import styled from 'styled-components';
 import { useAppContext } from '../context/AppContext';

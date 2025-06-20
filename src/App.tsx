@@ -1,3 +1,14 @@
+
+/*
+  This is the main entry point for the ShipMate application.  
+  It sets up the React Router, defines the main layout and responsive navbar,includes routes for the estimate form and history page.
+  It also includes a footer with contact information and uses styled-components for styling.
+  The application is designed to be responsive, adapting to different screen sizes with appropriate styles.
+  It includes a global styles file for consistent styling across the app.
+*/
+
+
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import ProEstimateForm from './components/EstimateForm';
@@ -109,7 +120,7 @@ const App: React.FC = () => {
 
 
 
-    
+
     <ContentArea>
       <Routes>
         <Route path="/" element={<ProEstimateForm onEstimate={handleEstimate} />} />

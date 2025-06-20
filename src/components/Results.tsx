@@ -114,6 +114,7 @@ interface ResultProps {
   destination: string;
   distanceKm: number;
   weight: number;
+  weightUnit: "kg" | "lb"; 
   shippingOption: string;
   totalCost: number;
   currency: string;
@@ -124,12 +125,12 @@ const Result: React.FC<ResultProps> = ({
   destination,
   distanceKm,
   weight,
+  weightUnit,
   shippingOption,
   totalCost,
   currency,
 }) => {
   const estimatedTime = shippingOption === 'Express' ? '1–2 days' : '3–5 days';
-  // Determine the correct emoji based on shippingOption
   const shippingIconEmoji = shippingOption === 'Standard' ? '🚛' : '⚡'; // Using ⚡ for Express
 
   return (
@@ -149,13 +150,13 @@ const Result: React.FC<ResultProps> = ({
         <strong>Distance:</strong> <span>{distanceKm.toFixed(2)} km</span>
       </Label>
       <Label>
-        <strong>Weight:</strong> <span>{weight} kg</span>
+        <strong>Weight:</strong> <span>{weight} {weightUnit}</span>
       </Label>
-      <Label className="shipping-option-label"> {/* Add class for specific styling */}
+      <Label className="shipping-option-label"> 
         <strong>Shipping Option:</strong>
         <Badge type={shippingOption}>
-          <span>{shippingIconEmoji}</span> {/* Icon in its own span for precise styling */}
-          {shippingOption} {/* NOW THE TEXT IS HERE, NEXT TO THE ICON */}
+          <span>{shippingIconEmoji}</span> 
+          {shippingOption} 
         </Badge>
       </Label>
       <Label>

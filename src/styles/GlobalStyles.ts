@@ -1,3 +1,13 @@
+
+/*
+  This file contains global styles for the application.
+  It includes a CSS reset, base styles for typography, links, and selection.
+  The styles are created using styled-components for better maintainability and theming.
+  The global styles ensure a consistent look and feel across the app, with a focus on usability and accessibility.
+*/
+
+
+
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
